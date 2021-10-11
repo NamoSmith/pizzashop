@@ -5,6 +5,7 @@ class PizzaSize(Enum):
     small = {'base_price': 120, 'topping': 20}
     medium = {'base_price': 200, 'topping': 25}
     large = {'base_price': 300, 'topping': 30}
+    jumbo = {'base_price': 400, 'topping': 35}
 
     @property
     def price(self):
@@ -18,8 +19,9 @@ class PizzaSize(Enum):
 class Pizza:
     """A pizza with a size and optional toppings."""
 
-    def __init__(self, size):
-
+    def __init__(self, size: PizzaSize):
+        if not isinstance(size, PizzaSize):
+            raise TypeError('size must be a PizzaSize')
         self.size = size
         self.toppings = []
 
