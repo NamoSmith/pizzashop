@@ -2,13 +2,17 @@ from enum import Enum
 
 
 class PizzaSize(Enum):
-    # Enum members written as: name = value
-    small = 120
-    medium = 200
-    large = 280
+    small = {'base_price': 120, 'topping': 20}
+    medium = {'base_price': 200, 'topping': 25}
+    large = {'base_price': 300, 'topping': 30}
 
-    def __str__(self):
-        return self.name
+    @property
+    def price(self):
+        return self.value['base_price']
+
+    @property
+    def topping_price(self):
+        return self.value['topping']
 
 
 class Pizza:
@@ -20,10 +24,7 @@ class Pizza:
         self.toppings = []
 
     def get_price(self):
-        """Price of pizza depends on size and number of toppings."""
-        # "Introduce explanatory variable."
-        price = self.size.value + 20*len(self.toppings)
-        return price
+        return self.size.price + self.size.topping_price * len(self.toppings)
     
     def add_topping(self, topping):
         """Add a topping to the pizza"""
